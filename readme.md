@@ -31,9 +31,5 @@ If you want to contribute to this project, you can start by forking the reposito
 Here are some ways you can contribute to the project:
 
 - Improve the classification model by adding more categories or improving the accuracy of the existing categories.
-- Add new features to the mobile app, such as the ability to edit or delete shopping items.
-- Improve the user interface and user experience of the mobile app.
 - Write tests to ensure the stability and reliability of the codebase.
 - Fix any bugs or issues that you encounter while using the app.
-
-Please make sure to follow the **[contribution guidelines](https://chat.openai.com/chat/CONTRIBUTING.md)** when submitting a pull request.
