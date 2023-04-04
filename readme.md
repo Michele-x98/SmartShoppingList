@@ -12,7 +12,7 @@ To get started with the Python backend, you will need to set up a virtual enviro
 4. Activate the virtual environment by running the command **`source venv/bin/activate`** (for Mac/Linux) or **`.\venv\Scripts\activate`** (for Windows).
 5. Install the required Python packages by running the command **`pip install -r requirements.txt`**.
 
-Once you have completed these steps, you can start the Python backend by running the command **`python app.py`**. The server will start running on **`http://localhost:5000`**.
+Once you have completed these steps, you can start the Python backend by running the command **`flask --app main.py run`**. The server will start running on **`http://localhost:5000`**.
 
 ## **Getting Started - Flutter**
 
