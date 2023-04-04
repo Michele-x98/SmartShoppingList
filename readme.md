@@ -20,7 +20,7 @@ To get started with the Flutter app, you will need to set up your development en
 
 1. Install Flutter by following the **[official documentation](https://flutter.dev/docs/get-started/install)**.
 2. Clone the repository to your local machine.
-3. Navigate to the **`shopping_item_classification`** directory.
+3. Navigate to the **`smart-shopping-list`** directory.
 4. Run the command **`flutter pub get`** to install the required packages.
 5. Run the command **`flutter run`** to start the app on your connected device or emulator.
 
