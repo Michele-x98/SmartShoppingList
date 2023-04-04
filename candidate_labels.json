@@ -1,0 +1,18 @@
+{
+    "labels": [
+        "bedroom",
+        "bathroom",
+        "kitchen",
+        "livingroom",
+        "diningroom",
+        "office",
+        "library",
+        "garden",
+        "yard",
+        "garage",
+        "basement",
+        "attic",
+        "stairs",
+        "balcony"
+    ]
+}

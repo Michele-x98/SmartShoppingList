@@ -1,0 +1,28 @@
+name: smart_shopping_list
+description: A new Flutter project.
+publish_to: "none"
+version: 0.1.0
+
+scripts:
+  freezed: flutter pub run build_runner build --delete-conflicting-outputs
+
+environment:
+  sdk: ">=2.19.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.5
+  flutter_riverpod: ^2.3.2
+  uuid: ^3.0.7
+  freezed_annotation: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+  freezed: ^2.3.2
+
+flutter:
+  uses-material-design: true
