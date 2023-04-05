@@ -3,6 +3,7 @@ import json
 from flask import Flask, request
 import time
 
+
 app = Flask(__name__)
 
 # init model
@@ -10,16 +11,21 @@ classifier = pipeline("zero-shot-classification",
                       model="facebook/bart-large-mnli", use_fast=True)
 
 
+class ClassifyRequest(object):
+    def __init__(self, item, candidate_labels, top_k=3, use_translation=False, t_from='', t_to=''):
+        self.item = item
+        self.candidate_labels = candidate_labels,
+        self.top_k = top_k
+        self.use_translation = use_translation
+        self.t_from = t_from
+        self.t_to = t_to
+
+
 @app.route("/classify")
 def getClassification():
-    args = request.args
-    input = args.get('item')
-    use_translation = args.get('use_translatrion')
-    t_from = args.get('from')
-    t_to = args.get('to')
-    # TODO ask for candidate labels
-    # TODO move args to body
-    return _getClassification(input, use_translation, t_from, t_to)
+    j = json.loads(json.dumps(request.get_json()))
+    c = ClassifyRequest(**j)
+    return _getClassification(c)
 
 
 def _translate(input, from_, to):
@@ -34,21 +40,22 @@ def _translate(input, from_, to):
     return translation
 
 
-def _getClassification(input, use_translation=False, t_from='', t_to=''):
+def _getClassification(c: ClassifyRequest):
 
     st = time.process_time()
 
-    print('Input: ', input)
-    print('Use translation: ', use_translation)
+    if (c.item == ''):
+        return 'Error: missing item to classify'
 
-   # read the sequence of candidate labels from json file
-    with open('candidate_labels.json') as f:
-        # the json file contains an object with a single key "labels" and a list of labels as value
-        candidate_labels = json.load(f)['labels']
+    if (c.candidate_labels.__len__() == 0):
+        return 'Error: missing candidate labels'
 
-    if (use_translation == 'false'):
+    print('Item to classify: ', c.item)
+    print('Candidate labels: ', c.candidate_labels)
+
+    if (c.use_translation == 'false' or c.use_translation == False):
         # classify the input
-        result = classifier(input, candidate_labels,
+        result = classifier(c.item, c.candidate_labels,
                             multi_label=True, top_k=3)
 
         int = time.process_time() - st
@@ -56,7 +63,7 @@ def _getClassification(input, use_translation=False, t_from='', t_to=''):
 
         # return the top 2 labels with the highest scores from result
         top3_indices = sorted(
-            range(len(result['scores'])), key=lambda i: result['scores'][i])[-3:]
+            range(len(result['scores'])), key=lambda i: result['scores'][i])[-c.top_k:]
         top3_labels = [result['labels'][i] for i in top3_indices]
 
         end = time.process_time() - st
@@ -64,25 +71,24 @@ def _getClassification(input, use_translation=False, t_from='', t_to=''):
 
         return top3_labels
 
-    if (t_from == '' or t_to == ''):
+    if (c.t_from == '' or c.t_to == ''):
         return 'Error: missing translation parameters from or to'
 
     # translate the input
-    translation = _translate(input, 'it', 'en')[0]['translation_text']
+    translation = _translate(input, c.t_from, c.t_to)[0]['translation_text']
 
     tr = time.process_time() - st
     print('Time needed to complete translate: ', tr)
 
-    result = classifier(translation, candidate_labels,
+    result = classifier(translation, c.candidate_labels,
                         multi_label=True, top_k=3)
 
     tr = time.process_time() - st
 
     # return the top 2 labels with the highest scores from result
     top3_indices = sorted(
-        range(len(result['scores'])), key=lambda i: result['scores'][i])[-3:]
+        range(len(result['scores'])), key=lambda i: result['scores'][i])[-c.top_k:]
     top3_labels = [result['labels'][i] for i in top3_indices]
-    print(top3_labels)
 
     # translate the labels and add them to new list
     translated_labels = []
