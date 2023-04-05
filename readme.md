@@ -12,7 +12,7 @@ To get started with the Python backend, you will need to set up a virtual enviro
 4. Activate the virtual environment by running the command **`source venv/bin/activate`** (for Mac/Linux) or **`.\venv\Scripts\activate`** (for Windows).
 5. Install the required Python packages by running the command **`pip install -r requirements.txt`**.
 
-Once you have completed these steps, you can start the Python backend by running the command **`python app.py`**. The server will start running on **`http://localhost:5000`**.
+Once you have completed these steps, you can start the Python backend by running the command **`flask --app main.py run`**. The server will start running on **`http://localhost:5000`**.
 
 ## **Getting Started - Flutter**
 
@@ -20,7 +20,7 @@ To get started with the Flutter app, you will need to set up your development en
 
 1. Install Flutter by following the **[official documentation](https://flutter.dev/docs/get-started/install)**.
 2. Clone the repository to your local machine.
-3. Navigate to the **`shopping_item_classification`** directory.
+3. Navigate to the **`smart-shopping-list`** directory.
 4. Run the command **`flutter pub get`** to install the required packages.
 5. Run the command **`flutter run`** to start the app on your connected device or emulator.
 
@@ -31,9 +31,5 @@ If you want to contribute to this project, you can start by forking the reposito
 Here are some ways you can contribute to the project:
 
 - Improve the classification model by adding more categories or improving the accuracy of the existing categories.
-- Add new features to the mobile app, such as the ability to edit or delete shopping items.
-- Improve the user interface and user experience of the mobile app.
 - Write tests to ensure the stability and reliability of the codebase.
 - Fix any bugs or issues that you encounter while using the app.
-
-Please make sure to follow the **[contribution guidelines](https://chat.openai.com/chat/CONTRIBUTING.md)** when submitting a pull request.
