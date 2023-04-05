@@ -47,15 +47,18 @@ def _getClassification(c: ClassifyRequest):
     if (c.item == ''):
         return 'Error: missing item to classify'
 
-    if (c.candidate_labels.__len__() == 0):
-        return 'Error: missing candidate labels'
+    labels = c.candidate_labels
+    if (labels.__len__() == 0):
+        with open('candidate_labels.json') as f:
+            # the json file contains an object with a single key "labels" and a list of labels as value
+            labels = json.load(f)['labels']
 
     print('Item to classify: ', c.item)
     print('Candidate labels: ', c.candidate_labels)
 
     if (c.use_translation == 'false' or c.use_translation == False):
         # classify the input
-        result = classifier(c.item, c.candidate_labels,
+        result = classifier(c.item, labels,
                             multi_label=True, top_k=3)
 
         int = time.process_time() - st
@@ -80,7 +83,7 @@ def _getClassification(c: ClassifyRequest):
     tr = time.process_time() - st
     print('Time needed to complete translate: ', tr)
 
-    result = classifier(translation, c.candidate_labels,
+    result = classifier(translation, labels,
                         multi_label=True, top_k=3)
 
     tr = time.process_time() - st
