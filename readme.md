@@ -1,5 +1,10 @@
 # **Shopping Item Classification App**
 
+<div align=center>
+<img src="https://github.com/Michele-x98/SmartShoppingList/blob/main/assets/home.png" height=600>
+<img src="https://github.com/Michele-x98/SmartShoppingList/blob/main/assets/classification.png" height=600>
+</div>
+
 This is a mobile application that uses a Python backend with a zero-shot classification model to classify shopping items into categories during the adding process. The app is designed to make it easier for users to organize their shopping list by automatically classifying items into their respective categories, such as fruits, vegetables, dairy, etc.
 
 ## **Getting Started - Python Venv**
