@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
+  return _CategoryModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CategoryModel {
   String get title => throw _privateConstructorUsedError;
   List<Item> get items => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CategoryModelCopyWith<CategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -101,11 +106,13 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$_CategoryModel extends _CategoryModel {
+@JsonSerializable()
+class _$_CategoryModel implements _CategoryModel {
   const _$_CategoryModel({required this.title, required final List<Item> items})
-      : _items = items,
-        super._();
+      : _items = items;
+
+  factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$$_CategoryModelFromJson(json);
 
   @override
   final String title;
@@ -131,6 +138,7 @@ class _$_CategoryModel extends _CategoryModel {
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, title, const DeepCollectionEquality().hash(_items));
@@ -140,13 +148,22 @@ class _$_CategoryModel extends _CategoryModel {
   @pragma('vm:prefer-inline')
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
       __$$_CategoryModelCopyWithImpl<_$_CategoryModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CategoryModelToJson(
+      this,
+    );
+  }
 }
 
-abstract class _CategoryModel extends CategoryModel {
+abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel(
       {required final String title,
       required final List<Item> items}) = _$_CategoryModel;
-  const _CategoryModel._() : super._();
+
+  factory _CategoryModel.fromJson(Map<String, dynamic> json) =
+      _$_CategoryModel.fromJson;
 
   @override
   String get title;

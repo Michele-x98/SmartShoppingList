@@ -1,36 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
+import 'package:smart_shopping_list/services/hive_store.dart';
 
 import '../model/category.dart';
 import '../model/item.dart';
-
-/// generate 3 fake categories with 3 items each
-final temp = [
-  CategoryModel(
-    title: 'kitchen',
-    items: [
-      Item(id: const Uuid().v4(), name: 'Pasta', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Tomato', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Oil', unit: 1),
-    ],
-  ),
-  CategoryModel(
-    title: 'bathroom',
-    items: [
-      Item(id: const Uuid().v4(), name: 'Shampoo', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Toothbrush', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Toothpaste', unit: 1),
-    ],
-  ),
-  CategoryModel(
-    title: 'office',
-    items: [
-      Item(id: const Uuid().v4(), name: 'Papers', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Books', unit: 1),
-      Item(id: const Uuid().v4(), name: 'Alarms', unit: 1),
-    ],
-  ),
-];
 
 final shoppingListProvider =
     NotifierProvider<ShoppingListProvider, List<CategoryModel>>(
@@ -38,10 +10,11 @@ final shoppingListProvider =
 );
 
 class ShoppingListProvider extends Notifier<List<CategoryModel>> {
+  final HiveStoreService _hiveStoreService = HiveStoreService.instance;
+
   @override
   List<CategoryModel> build() {
-    // get shopping list from local storage
-    return temp;
+    return HiveStoreService.instance.getItems();
   }
 
   void addItem(String category, Item item) {
@@ -63,6 +36,7 @@ class ShoppingListProvider extends Notifier<List<CategoryModel>> {
               ...state.sublist(index + 1),
             ];
     }
+    _hiveStoreService.saveItems(state);
   }
 
   void removeItem(String category, Item item) {
@@ -80,6 +54,7 @@ class ShoppingListProvider extends Notifier<List<CategoryModel>> {
         ...state.sublist(index + 1),
       ];
     }
+    _hiveStoreService.saveItems(state);
   }
 
   void updateItem(String category, Item newItem) {
@@ -102,9 +77,11 @@ class ShoppingListProvider extends Notifier<List<CategoryModel>> {
         ...state.sublist(index + 1),
       ];
     }
+    _hiveStoreService.saveItems(state);
   }
 
   void removeCategory(String title) {
     state = state.where((element) => element.title != title).toList();
+    _hiveStoreService.saveItems(state);
   }
 }

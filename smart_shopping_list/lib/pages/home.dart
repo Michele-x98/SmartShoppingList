@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_shopping_list/pages/settings.dart';
 import 'package:smart_shopping_list/provider/shopping_list_provider.dart';
+import 'package:smart_shopping_list/services/hive_store.dart';
 import 'package:smart_shopping_list/widgets/add_item_sheets.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -66,7 +68,18 @@ class _HomePageState extends ConsumerState<HomePage> {
               backgroundColor: Colors.deepPurple.withOpacity(0.2),
               title: const Text('Smart Home List'),
               elevation: 0.0,
-              leading: const SizedBox(),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
             ),
           ),
         ),
@@ -84,7 +97,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   .removeCategory(category.title);
             },
             child: ExpansionTile(
-              title: Text(category.title),
+              title: Text('${category.title} (${category.items.length})'),
               shape: const RoundedRectangleBorder(),
               children: [
                 ...category.items
@@ -142,7 +155,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     .toList(),
                 ElevatedButton(
                   onPressed: () => openModal(category: category.title),
-                  child: const Text('Add new category'),
+                  child: const Text('Add new item'),
                 )
               ],
             ),

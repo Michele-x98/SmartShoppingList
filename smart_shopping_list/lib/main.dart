@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_shopping_list/services/hive_store.dart';
 import 'package:smart_shopping_list/utils/unfocus.dart';
-import 'home.dart';
+import 'pages/home.dart';
 
 Future<void> main() async {
   // Block protrait mode
@@ -12,6 +13,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
+  await HiveStoreService.instance.init();
   runApp(const App());
 }
 
