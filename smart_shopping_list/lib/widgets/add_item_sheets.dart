@@ -129,13 +129,13 @@ class _AddItemSheetsState extends ConsumerState<AddItemSheets> {
                                         final value = num.tryParse(
                                                 _unitController.text) ??
                                             0;
-                                        _unitController.text =
-                                            (value + 1).toString();
+                                        if (value > 0) {
+                                          _unitController.text =
+                                              (value - 1).toString();
+                                        }
                                         setState(() {});
                                       },
-                                      splashColor:
-                                          Colors.deepPurple.withOpacity(0.2),
-                                      icon: const Icon(Icons.add),
+                                      icon: const Icon(Icons.remove_outlined),
                                     ),
                                   ),
                                 ),
@@ -170,13 +170,13 @@ class _AddItemSheetsState extends ConsumerState<AddItemSheets> {
                                         final value = num.tryParse(
                                                 _unitController.text) ??
                                             0;
-                                        if (value > 0) {
-                                          _unitController.text =
-                                              (value - 1).toString();
-                                        }
+                                        _unitController.text =
+                                            (value + 1).toString();
                                         setState(() {});
                                       },
-                                      icon: const Icon(Icons.remove_outlined),
+                                      splashColor:
+                                          Colors.deepPurple.withOpacity(0.2),
+                                      icon: const Icon(Icons.add),
                                     ),
                                   ),
                                 ),
@@ -233,7 +233,9 @@ class _AddItemSheetsState extends ConsumerState<AddItemSheets> {
                             }
                             return Padding(
                               padding: EdgeInsets.only(
-                                  right: 16, left: index == 0 ? 16 : 0),
+                                right: 16,
+                                left: index == 0 ? 16 : 0,
+                              ),
                               child: InkWell(
                                 enableFeedback: true,
                                 borderRadius: BorderRadius.circular(20),

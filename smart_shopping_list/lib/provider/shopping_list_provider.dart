@@ -59,24 +59,18 @@ class ShoppingListProvider extends Notifier<List<CategoryModel>> {
 
   void updateItem(String category, Item newItem) {
     final index = state.indexWhere((element) => element.title == category);
-    if (index == -1) {
-      return;
-    } else {
-      state = [
-        ...state.sublist(0, index),
-        CategoryModel(
-          title: state[index].title,
-          items: state[index].items.map((e) {
-            if (e.id == newItem.id) {
-              return newItem;
-            } else {
-              return e;
-            }
-          }).toList(),
-        ),
-        ...state.sublist(index + 1),
-      ];
-    }
+    if (index == -1) return;
+    state = [
+      ...state.sublist(0, index),
+      CategoryModel(
+        title: state[index].title,
+        items: state[index].items.map((e) {
+          if (e.id == newItem.id) return newItem;
+          return e;
+        }).toList(),
+      ),
+      ...state.sublist(index + 1),
+    ];
     _hiveStoreService.saveItems(state);
   }
 
